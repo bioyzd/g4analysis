@@ -62,8 +62,8 @@ def Get_twist_in_GDNA(traj_file,coor_file,base_list_1,base_list_2,output_file):
             if atom.atom_name =="C1'":
                 C1_list_2.append(atom.atom_serial)
 
-    print C1_list_1
-    print C1_list_2
+#    print C1_list_1
+#    print C1_list_2
 
     u=MDAnalysis.Universe(coor_file,traj_file)    
     for ts in u.trajectory:
@@ -77,7 +77,7 @@ def Get_twist_in_GDNA(traj_file,coor_file,base_list_1,base_list_2,output_file):
                     ts._z[C1_list_2[(i+1)%4]-1]-ts._z[C1_list_2[i]-1]]
             vector1=numpy.array(vector1)
             vector2=numpy.array(vector2)
-            print vector1,vector2
+#            print vector1,vector2
             gamma=numpy.dot(vector1,vector2)/(math.sqrt(numpy.dot(vector1,vector1)*numpy.dot(vector2,vector2)))
             angle.append(math.acos(gamma)/3.1416*180)
 
