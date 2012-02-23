@@ -201,8 +201,10 @@ if __name__=="__main__":
         else:
             l1=Simple_atom.Get_list(resu["coor_file"],True)
             list_group_1.append(l1)
+            list_output.append(resu["output_file"])
 
         if is_get_dt:
             parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],list_group_1,list_output,resu["skip"],float(dt))
         else:
+            print list_output
             parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],list_group_1,list_output,resu["skip"])

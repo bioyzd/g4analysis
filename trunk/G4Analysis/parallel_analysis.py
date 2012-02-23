@@ -36,6 +36,7 @@ import os
 import usage
 import MDAnalysis
 from math import cos, sin, sqrt
+import numpy
 from numpy import matrix
 from numpy import dot
 
@@ -179,7 +180,7 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
             '''the group 1 coordinate list'''
             for m in range(len(base_name_list[i])):
                 temp_list = [ [atom_list[x-1].atom_coor_x, atom_list[x-1].atom_coor_y, atom_list[x-1].atom_coor_z] for x in base_atom_list[i][m] ]
-                result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list[i][m])
+                result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list[i][m][0])
                 c1.append(numpy.array(temp_list))
                 r1.append(result)
 
@@ -193,7 +194,7 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
 
     
     Atom_list=Simple_atom.Get_Simple_atom_list(coor_file)
-    residue_list=Simple_atom.Get_Segment_list(Atom_list)
+    residue_list=Simple_atom.Get_Residue_list(Atom_list)
     
     base_name_list=list()
     base_atom_list=list()
@@ -216,7 +217,7 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
         fp.write("#time(ns)   RMSD(A)\n")
 
         base_name_list.append( [residue_list[j-1] for j in base_list[i]])
-        base_atom_list.append( [Get_baseID_list(Atom_list,j) for j in base_list[i]])
+        base_atom_list.append( [DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list[i]])
 
     u=MDAnalysis.Universe(coor_file,traj_file)
 
@@ -237,7 +238,7 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
                 '''the group 1 coordinate list'''
                 for m in range(len(base_name_list[i])):
                     temp_list = [ [ts._x[x-1], ts._y[x-1], ts._z[x-1]] for x in base_atom_list[i][m] ]
-                    result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list[i][m])
+                    result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list[i][m][0])
                     c1.append(numpy.array(temp_list))
                     r1.append(result)
 
