@@ -233,3 +233,4 @@ def Get_group_RMSD(base_name_list,expr_coor_list,origin_group,orient_group):
         pass
 
     return RMSD
+
