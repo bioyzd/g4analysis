@@ -12,7 +12,7 @@
 
 
 \title{G4Analysis Documentation}
-\date{February 23, 2012}
+\date{February 24, 2012}
 \release{0.1.0}
 \author{Zhu H.}
 \newcommand{\sphinxlogo}{}
@@ -238,128 +238,6 @@ Print help info and quit
 
 \section{Some details of the Algorithm}
 \label{documentation_pages/Parallel_analysis:some-details-of-the-algorithm}
-
-\chapter{Modify\_Coor}
-\label{documentation_pages/Modify_Coor::doc}\label{documentation_pages/Modify_Coor:modify-coor}
-
-\section{Introduction}
-\label{documentation_pages/Modify_Coor:introduction}
-Modify\_Coor convert a structure file from one format to another or modified
-the structure file. The structure file can be in pdb, gro or pqr format.
-
-
-\section{Usage}
-\label{documentation_pages/Modify_Coor:usage}
-
-\subsection{Interactive Mode}
-\label{documentation_pages/Modify_Coor:interactive-mode}
-\textbf{Modify\_Coor.py} to run interactive mode.
-Type help can see the list of the key words. They are listed below.
-
-\begin{tabulary}{\linewidth}{|L|L|L|}
-\hline
-
-load
- & 
-\textless{} filename \textgreater{}
- & 
-: Load a structure file: gro pdb etc.
-\\
-
-list
- &  & 
-: List the groups.
-\\
-
-\textless{}Enter\textgreater{}
- &  & 
-: List the groups.
-\\
-
-delete
- & 
-\textless{} groupname \textgreater{}
- & 
-: Delete a group.
-\\
-
-splitres
- & 
-\textless{} groupname \textgreater{}
- & 
-: Split a group to residues.
-\\
-
-splitatom
- & 
-\textless{} groupname \textgreater{}
- & 
-: Split a group to atoms.
-\\
-
-save
- & 
-\textless{} filename \textgreater{}
- & 
-: Save the result to a structure file: gro pdb etc.
-\\
-
-history
- &  & 
-: Print the input history.
-\\
-
-help
- &  & 
-: Print help information.
-\\
-
-quit
- &  & 
-: Quit
-\\
-\hline
-\end{tabulary}
-
-
-\textbf{load}
-
-Now many structure file format are allowed to load, include gro, pdb, pqr and amber top+crd.
-
-\textbf{save}
-
-Only two types of the structure file format (pdb and gro) can be saved by this program.
-
-
-\subsection{Commond Mode}
-\label{documentation_pages/Modify_Coor:commond-mode}
-\textbf{Modify\_Coor.py -f filename -o filename} to run interactive mode.
-
-
-\section{Some Detials}
-\label{documentation_pages/Modify_Coor:some-detials}
-
-\chapter{Trj\_modify}
-\label{documentation_pages/Trj_modify::doc}\label{documentation_pages/Trj_modify:trj-modify}
-
-\section{Introduction}
-\label{documentation_pages/Trj_modify:introduction}
-Trj\_modify is design for fit the trajectory to the first frame by translation and rotation. First it move the solvate to the ceter, then it fit to the first frame of the trajectory.
-
-
-\section{Usage}
-\label{documentation_pages/Trj_modify:usage}
-\textbf{Trj\_modify topology\_file  trajectory\_file  output\_trajectory\_file}
-
-Input trajectory file can be in any format support by \textbf{MDAnalysis}, and the suggest output format of trajectory file is \emph{xtc},
-
-\begin{notice}{warning}{Warning:}
-This program will read the pbc condition and use the dimensions read from trajectory files. You should make sure the dimensions are right or it will create a wrong output trajectory file.
-\end{notice}
-
-
-\section{Some detials of the Algorithm}
-\label{documentation_pages/Trj_modify:some-detials-of-the-algorithm}
 
 \chapter{Least squares fitting procedures}
 \label{documentation_pages/least_squares_fitting::doc}\label{documentation_pages/least_squares_fitting:least-squares-fitting-procedures}
