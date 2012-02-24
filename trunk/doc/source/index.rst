@@ -17,8 +17,6 @@ cannot read directly.
    :maxdepth: 3
 
    ./documentation_pages/Parallel_analysis
-   ./documentation_pages/Modify_Coor
-   ./documentation_pages/Trj_modify
    ./documentation_pages/least_squares_fitting
    ./documentation_pages/file_format
    ./documentation_pages/modules

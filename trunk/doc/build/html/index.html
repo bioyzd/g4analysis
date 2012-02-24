@@ -7,7 +7,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to G4Analysis’s documentation! &mdash; G4Analysis v0.1.0 documentation</title>
+    <title>Welcome to MDPackage’s documentation! &mdash; G4Analysis v0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -22,7 +22,8 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="G4Analysis v0.1.0 documentation" href="#" /> 
+    <link rel="top" title="G4Analysis v0.1.0 documentation" href="#" />
+    <link rel="next" title="Parallel_analysis" href="documentation_pages/Parallel_analysis.html" /> 
   </head>
   <body>
     <div class="related">
@@ -31,6 +32,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="documentation_pages/Parallel_analysis.html" title="Parallel_analysis"
+             accesskey="N">next</a> |</li>
         <li><a href="#">G4Analysis v0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -40,11 +44,72 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-g4analysis-s-documentation">
-<h1>Welcome to G4Analysis&#8217;s documentation!<a class="headerlink" href="#welcome-to-g4analysis-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
+  <div class="section" id="welcome-to-mdpackage-s-documentation">
+<h1>Welcome to MDPackage&#8217;s documentation!<a class="headerlink" href="#welcome-to-mdpackage-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>The MDPackage is a program package write in python mostly base on the
+MDAnalysis Pacakge. The aim of this package is for editing the input and
+output files of MD software like Gromacs, Amber, and NAMD. It also used for
+reading and analyzing the MD trajectory, which mostly in binary format and
+cannot read directly.</p>
 <div class="toctree-wrapper compound">
-<ul class="simple">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/Parallel_analysis.html">Parallel_analysis</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Parallel_analysis.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Parallel_analysis.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Parallel_analysis.html#some-details-of-the-algorithm">Some details of the Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/Modify_Coor.html">Modify_Coor</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Modify_Coor.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Modify_Coor.html#usage">Usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/Modify_Coor.html#interactive-mode">Interactive Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/Modify_Coor.html#commond-mode">Commond Mode</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Modify_Coor.html#some-detials">Some Detials</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/Trj_modify.html">Trj_modify</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Trj_modify.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Trj_modify.html#usage">Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/Trj_modify.html#some-detials-of-the-algorithm">Some detials of the Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/least_squares_fitting.html">Least squares fitting procedures</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/least_squares_fitting.html#algorithm">Algorithm</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/file_format.html">File format list</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#pdb">PDB</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/file_format.html#introduction-to-protein-data-bank-format">Introduction to Protein Data Bank Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/file_format.html#description">Description</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#pqr">PQR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#gro">GRO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#xyz">XYZ</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/file_format.html#format">Format</a></li>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/file_format.html#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#amber-top">amber TOP</a></li>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/file_format.html#amber-crd">amber CRD</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/modules.html">The modules of MDPackage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/modules/atomlib.html">atomlib</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/modules/atomlib.html#variables">Variables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="documentation_pages/change.html">Change log</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="documentation_pages/change.html#version-0-1-0">version 0.1.0</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="documentation_pages/change.html#modules-and-scripts">Modules and Scripts</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -65,12 +130,15 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to G4Analysis&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#">Welcome to MDPackage&#8217;s documentation!</a><ul>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
+  <h4>Next topic</h4>
+  <p class="topless"><a href="documentation_pages/Parallel_analysis.html"
+                        title="next chapter">Parallel_analysis</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/index.txt"
@@ -99,6 +167,9 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="documentation_pages/Parallel_analysis.html" title="Parallel_analysis"
+             >next</a> |</li>
         <li><a href="#">G4Analysis v0.1.0 documentation</a> &raquo;</li> 
       </ul>
     </div>
