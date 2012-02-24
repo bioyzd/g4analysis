@@ -90,7 +90,7 @@ def Get_twist_in_GDNA(traj_file,coor_file,base_list_1,base_list_2,output_file):
     print "The result are in the file: ",output_file
 
 
-def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,skip=1):
+def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,skip=1,dt=1):
     '''
     Input the layer 1 (G11,G12,G13,G14) and layer 2 (G21,G22,G23,G24),Calculate the angle 
     between G1i-G1(i+1) and G2i-G2(i+1). write the result to output_file.\n
@@ -224,9 +224,8 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
                 fp=open(output_name[i],'a')
                 fp.write("%6.3f \t %6.3f \t %6.3f \t %6.3f \t %6.3f\n" \
                         %(ts.time/1000,angle[0],angle[1],angle[2],angle[3]))             
-                #if ts.frame % 100 ==0:
-                #    print " analysis frame %6d......" %ts.frame
-                usage.echo(" analysis frame %6d......\r" %ts.frame)
+                if ts.frame % 100 ==0 and i ==0:
+                    usage.echo(" analysis frame %6d\r" %ts.frame)
                 fp.close()
     print "The result are in the file: ",output_name
     

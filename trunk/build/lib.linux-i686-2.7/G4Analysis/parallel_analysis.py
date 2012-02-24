@@ -36,6 +36,7 @@ import os
 import usage
 import MDAnalysis
 from math import cos, sin, sqrt
+import math
 import numpy
 from numpy import matrix
 from numpy import dot
