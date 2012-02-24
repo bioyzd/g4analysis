@@ -29,7 +29,7 @@ from G4Analysis import usage
 
 def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
         parm_file="para_analysis.in",skip=1,show_help="yes",\
-        calcu_dist="False",calcu_twist="False",calcu_rmsd="False"):
+        calcu_rise="False",calcu_twist="False",calcu_rmsd="False"):
     '''
     print the usage information.
     '''
@@ -44,7 +44,7 @@ def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",
     print ""
     usage.Type_input()
     usage.Print_line()
-    usage.Show("--dist","bool",calcu_dist,"Calculate the distance of DNA bases groups.")
+    usage.Show("--rise","bool",calcu_rise,"Calculate the distance of DNA bases groups.")
     usage.Show("--twist","bool",calcu_twist,"Calculate the twist of DNA bases groups.")
     usage.Show("--rmsd","bool",calcu_rmsd,"Calculate the RMSD of DNA bases groups.")
     usage.Show_skip(skip)
@@ -62,16 +62,15 @@ def Check_argv(argv):
     skip=1
     resu_hash={}
     calcu_rmsd=False
+    calcu_rise=False
+    calcu_twist=False
 
     try:
-        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","rmsd"])
+        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","rmsd","rise","twist"])
     except getopt.GetoptError,e:
         print e
         sys.exit()
 
-#    if len(opts) != 3 and len(opts) != 4 :
-#        Usage()
-#        sys.exit()
 
     for a,b in opts:
         if a == "-p" :
@@ -85,8 +84,16 @@ def Check_argv(argv):
                 skip = int(b)
             except:
                 pass
+
         elif a == "--rmsd":
             calcu_rmsd=True
+
+        elif a=="--rise":
+            calcu_rise=True
+
+        elif a=="--twist":
+            calcu_twist=True
+
         elif a=="-i":
             parm_file=b
         elif a=="-h":
@@ -106,7 +113,12 @@ def Check_argv(argv):
 
     resu_hash["skip"]=skip
     resu_hash["calcu_rmsd"]=calcu_rmsd
-    Usage(coor_file,traj_file,output_file,parm_file,skip,"no",calcu_rmsd)
+    resu_hash["calcu_rise"]=calcu_rise
+    resu_hash["calcu_twist"]=calcu_twist
+
+    Usage(coor_file,traj_file,output_file,parm_file,skip,"no",\
+            calcu_rise,calcu_twist,calcu_rmsd)
+
     return resu_hash
 
 
@@ -162,7 +174,7 @@ if __name__=="__main__":
         dt=raw_input("Input the time step between frames for Amber trajectory file (ps).")
         is_get_dt=True
 
-    if resu["calcu_rmsd"]==False:
+    if resu["calcu_rise"]==True:
         if have_parm_file:
             fp=open(resu["parm_file"])
             lines=fp.readlines()
@@ -195,7 +207,42 @@ if __name__=="__main__":
         else:
             parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"])
 
-    else:
+
+    if resu["calcu_twist"]==True:
+        if have_parm_file:
+            fp=open(resu["parm_file"])
+            lines=fp.readlines()
+            for line in lines:
+                try:
+                    [group1,group2,outputname]=line.split()
+                except ValueError,e:
+                    print e
+                    print "I guess you forget the --rmsd for calculating the rmsd."
+                g1=group1.split(":")
+                g2=group2.split(":")
+                gg1=list()
+                gg2=list()
+                gg1=([int(i) for i in g1])
+                gg2=([int(i) for i in g2])
+                list_group_1.append(gg1)
+                list_group_2.append(gg2)
+                list_output.append(outputname)
+
+        else:
+            l1=Simple_atom.Get_list(resu["coor_file"],True)
+            l2=Simple_atom.Get_list(resu["coor_file"],False)
+
+            list_group_1.append(l1)
+            list_group_2.append(l2)
+            list_output.append(resu["output_file"])
+
+        if is_get_dt:
+            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"],float(dt))
+        else:
+            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"])
+
+
+    if resu["calcu_rmsd"]==True:
         if have_parm_file:
             fp=open(resu["parm_file"])
             lines=fp.readlines()
