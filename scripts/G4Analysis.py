@@ -13,6 +13,8 @@ Create on 2011-01-19\n
         - Changed the version to 0.2.1\n
     2011-04-26.\n 
         - Modified the usage part.
+    2012.02.24.\n
+        - Combining the twist_in_GDNA part to this script.
 '''
 
 import sys
@@ -22,9 +24,12 @@ import getopt
 import os
 from G4Analysis import Simple_atom
 from G4Analysis import parallel_analysis
+from G4Analysis import twist_in_GDNA
 from G4Analysis import usage
 
-def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",parm_file="para_analysis.in",skip=1,show_help="yes",calcu_rmsd="False"):
+def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
+        parm_file="para_analysis.in",skip=1,show_help="yes",\
+        calcu_dist="False",calcu_twist="False",calcu_rmsd="False"):
     '''
     print the usage information.
     '''
@@ -39,6 +44,8 @@ def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",
     print ""
     usage.Type_input()
     usage.Print_line()
+    usage.Show("--dist","bool",calcu_dist,"Calculate the distance of DNA bases groups.")
+    usage.Show("--twist","bool",calcu_twist,"Calculate the twist of DNA bases groups.")
     usage.Show("--rmsd","bool",calcu_rmsd,"Calculate the RMSD of DNA bases groups.")
     usage.Show_skip(skip)
     usage.Show_help(show_help)
