@@ -211,11 +211,11 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
 
                     vector1=numpy.array(vector1)
 
-                    vector1_1=numpy.cross(numpy.cross(numpy.cross(orient_group_1,vector1),orient_group_1),vector1)
+                    vector1_1=numpy.cross(numpy.cross(orient_group_1,vector1),orient_group_1)
 
                     vector2=numpy.array(vector2)
 
-                    vector2_2=numpy.cross(numpy.cross(numpy.cross(orient_group_2,vector2),orient_group_2),vector2)
+                    vector2_2=numpy.cross(numpy.cross(orient_group_2,vector2),orient_group_2)
 
  #                   print vector1_1,vector2_2
                     gamma=numpy.dot(vector1_1,vector2_2)/(math.sqrt(numpy.dot(vector1_1,vector1_1)*numpy.dot(vector2_2,vector2_2)))

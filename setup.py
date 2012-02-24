@@ -24,6 +24,6 @@ setup(
         version='0.1.0',
         author="zhuh",
         packages=['G4Analysis','G4Analysis.Coor','G4Analysis.mymath'],
-        scripts=['scripts/Parallel_analysis.py','scripts/Twist_in_GDNA.py']
+        scripts=['scripts/G4Analysis.py']
         )
 

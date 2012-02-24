@@ -140,13 +140,13 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
         fp.close()
 
         base_name_list_1.append( [residue_list[j-1] for j in base_list_1[i]])
-        print base_name_list_1
+#        print base_name_list_1
         base_name_list_2.append( [residue_list[j-1] for j in base_list_2[i]])
-        print base_name_list_2
+#        print base_name_list_2
         base_atom_list_1.append([DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list_1[i]])
-        print base_atom_list_1
+#        print base_atom_list_1
         base_atom_list_2.append([DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list_2[i]])
-        print base_atom_list_2
+#        print base_atom_list_2
 
 
         for base in base_list_1[i]:
@@ -154,14 +154,14 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
             for atom in atom_list:
                 if atom.atom_name =="C1'":
                     C1_list_1.append(atom.atom_serial)
-        print C1_list_1
+ #       print C1_list_1
      
         for base in base_list_2[i]:
             atom_list=Simple_atom.Get_Atom_in_residue(Atom_list,base)
             for atom in atom_list:
                 if atom.atom_name =="C1'":
                     C1_list_2.append(atom.atom_serial)
-        print C1_list_2
+ #       print C1_list_2
      
     u=MDAnalysis.Universe(coor_file,traj_file)    
 
@@ -211,13 +211,13 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
 
                     vector1=numpy.array(vector1)
 
-                    vector1_1=numpy.cross(numpy.cross(numpy.cross(orient_group_1,vector1),orient_group_1),vector1)
+                    vector1_1=numpy.cross(numpy.cross(orient_group_1,vector1),orient_group_1)
 
                     vector2=numpy.array(vector2)
 
-                    vector2_2=numpy.cross(numpy.cross(numpy.cross(orient_group_2,vector2),orient_group_2),vector2)
+                    vector2_2=numpy.cross(numpy.cross(orient_group_2,vector2),orient_group_2)
 
-                    print vector1_1,vector2_2
+ #                   print vector1_1,vector2_2
                     gamma=numpy.dot(vector1_1,vector2_2)/(math.sqrt(numpy.dot(vector1_1,vector1_1)*numpy.dot(vector2_2,vector2_2)))
                     angle.append(math.acos(abs(gamma))/3.1416*180)
          
