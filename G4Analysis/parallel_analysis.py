@@ -217,11 +217,23 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
         fp.write("#skip:%d\n" %skip)
         fp.write("#time(ns)   RMSD(A)\n")
 
-        base_name_list.append( [residue_list[j-1] for j in base_list[i]])
+#        base_name_list.append( [residue_list[j-1] for j in base_list[i]])
+        temp_list=list()
+        for m in base_list[i]:
+            for n in residue_list:
+                if n[1]==m:
+                    temp_list.append(n)
+                    break
+                else:
+                    pass
+        base_name_list.append(temp_list)
+#        print base_name_list
+
         base_atom_list.append( [DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list[i]])
 
     u=MDAnalysis.Universe(coor_file,traj_file)
 
+    print "Hello world"
 
 
     if traj_file.endswith("mdcrd") or traj_file.endswith("dcd"):
