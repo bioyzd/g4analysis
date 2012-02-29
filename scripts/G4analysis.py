@@ -29,7 +29,7 @@ from G4Analysis import usage
 
 def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
         parm_file="para_analysis.in",skip=1,show_help="yes",\
-        calcu_rise="False",calcu_twist="False",calcu_rmsd="False"):
+        calcu_rise="False",calcu_twist="False",calcu_rmsd="False",begin=0,end=-1):
     '''
     print the usage information.
     '''
@@ -47,6 +47,8 @@ def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",
     usage.Show("--rise","bool",calcu_rise,"Calculate the distance of DNA bases groups.")
     usage.Show("--twist","bool",calcu_twist,"Calculate the twist of DNA bases groups.")
     usage.Show("--rmsd","bool",calcu_rmsd,"Calculate the RMSD of DNA bases groups.")
+    usage.Show("--begin","int",begin,"First frame (ps) to read from trajectory.")
+    usage.Show("--end","int",end,"Last frame (ps) to read from trajectory.")
     usage.Show_skip(skip)
     usage.Show_help(show_help)
     print ""
@@ -64,9 +66,11 @@ def Check_argv(argv):
     calcu_rmsd=False
     calcu_rise=False
     calcu_twist=False
+    begin=1
+    end=-1
 
     try:
-        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","rmsd","rise","twist"])
+        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","begin=","end=","rmsd","rise","twist"])
     except getopt.GetoptError,e:
         print e
         sys.exit()
@@ -96,10 +100,20 @@ def Check_argv(argv):
 
         elif a=="-i":
             parm_file=b
+
         elif a=="-h":
             Usage()
             sys.exit()
-
+        elif a=="--begin":
+            try:
+                begin=int(b)
+            except:
+                pass
+        elif a=="--end":
+            try:
+                end=int(b)
+            except:
+                pass
 
     if os.path.isfile(coor_file) and os.path.isfile(traj_file):
         resu_hash["coor_file"]=coor_file
@@ -115,9 +129,11 @@ def Check_argv(argv):
     resu_hash["calcu_rmsd"]=calcu_rmsd
     resu_hash["calcu_rise"]=calcu_rise
     resu_hash["calcu_twist"]=calcu_twist
+    resu_hash["begin"]=begin
+    resu_hash["end"]=end
 
     Usage(coor_file,traj_file,output_file,parm_file,skip,"no",\
-            calcu_rise,calcu_twist,calcu_rmsd)
+            calcu_rise,calcu_twist,calcu_rmsd,begin,end)
 
     return resu_hash
 
@@ -203,9 +219,13 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"],float(dt))
+            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_group_2,list_output,resu["skip"],float(dt),\
+                    resu["begin"],resu["end"])
         else:
-            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"])
+            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_group_2,list_output,resu["skip"],\
+                    begin=resu["begin"],end=resu["end"])
 
 
     if resu["calcu_twist"]==True:
@@ -237,9 +257,13 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"],float(dt))
+            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_group_2,list_output,resu["skip"],float(dt),\
+                    resu["begin"],resu["end"])
         else:
-            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],list_group_1,list_group_2,list_output,resu["skip"])
+            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_group_2,list_output,resu["skip"],\
+                    begin=resu["begin"],end=resu["end"])
 
 
     if resu["calcu_rmsd"]==True:
@@ -258,7 +282,11 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],list_group_1,list_output,resu["skip"],float(dt))
+            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_output,resu["skip"],float(dt),\
+                    resu["begin"],resu["end"])
         else:
             print list_output
-            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],list_group_1,list_output,resu["skip"])
+            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],\
+                    list_group_1,list_output,resu["skip"],\
+                    begin=resu["begin"],end=resu["end"])
