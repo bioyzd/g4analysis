@@ -44,7 +44,7 @@ from numpy import dot
 import DNA_matrix
 
 
-def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_name,skip=1, dt=1):
+def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_name,skip=1, dt=1,begin=0,end=-1):
     '''
     Reading the traj file and the coordinate file like *.pdb or *.gro. With the base serial choosed,  get the
     rotation matrix for this base. and write it's to a output file with some syntax.
@@ -102,7 +102,13 @@ def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_n
         dt=u.trajectory.dt
 
     for ts in u.trajectory:
-        if ts.frame % skip == 0:
+        time=float((ts.frame-1)*dt)
+        if time < float(begin):
+            continue
+        if time > float(end) and end !=-1:
+            break
+
+        if ts.frame % skip == 0 :
             for i in range(LIST_NUM):
                 r1=[]
                 '''the group 1 rotate list'''
@@ -140,7 +146,6 @@ def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_n
                 gamma = dot(orient_group_1, orient_group_2) 
                 gamma = math.acos(gamma)*180/3.1416
 
-                time=float((ts.frame-1)*dt)
 
                 if ts.frame % 10 ==0 and i==0:
                     NOW_TIME=Time.time()
@@ -154,7 +159,7 @@ def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_n
     print "The result are in file: %s" %output_name
 
 
-def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
+def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1,begin=0,end=-1):
     '''
     Reading the traj file and the coordinate file like *.pdb or *.gro. With the base serial choosed,  get the
     rotation matrix for this base. and write it's to a output file with some syntax.
@@ -233,7 +238,6 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
 
     u=MDAnalysis.Universe(coor_file,traj_file)
 
-    print "Hello world"
 
 
     if traj_file.endswith("mdcrd") or traj_file.endswith("dcd"):
@@ -243,7 +247,15 @@ def Get_RMSD_result(traj_file, coor_file, base_list, output_name,skip=1, dt=1):
 
 
     for ts in u.trajectory:
-        if ts.frame % skip == 0:
+        time=(ts.frame-1)*dt
+   #     print begin,end
+        if time < float(begin):
+   #         print time
+            continue
+        if end > 0 and time > float(end):
+            break
+
+        if ts.frame % skip == 0 :
             for i in range(LIST_NUM):
                 r1=[]
                 '''the group 1 rotate list'''

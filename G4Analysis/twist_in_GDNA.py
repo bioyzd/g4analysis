@@ -90,7 +90,7 @@ def Get_twist_in_GDNA(traj_file,coor_file,base_list_1,base_list_2,output_file):
     print "The result are in the file: ",output_file
 
 
-def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,skip=1,dt=1):
+def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,skip=1,dt=1,begin=0,end=-1):
     '''
     Input the layer 1 (G11,G12,G13,G14) and layer 2 (G21,G22,G23,G24),Calculate the angle 
     between G1i-G1(i+1) and G2i-G2(i+1). write the result to output_file.\n
@@ -171,7 +171,12 @@ def Get_twist_in_GDNA2(traj_file,coor_file,base_list_1,base_list_2,output_name,s
         dt=u.trajectory.dt
 
     for ts in u.trajectory:
-        if ts.frame % skip == 0:
+        time=float((ts.frame-1)*dt)
+        if time < begin:
+            continue
+        if time > end and end !=-1:
+            break
+        if ts.frame % skip == 0 :
             for i in range(LIST_NUM):
                 r1=[]
                 '''the group 1 rotate list'''
