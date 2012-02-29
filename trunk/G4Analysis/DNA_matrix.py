@@ -87,6 +87,7 @@ def Get_group_rotmat(group_rotate_list,group_size):
     return z_axis,origin
 
 def Get_baseID_list(atom_list,base_serial):
+
     atom_list = Simple_atom.Get_Atom_in_residue(atom_list, base_serial)
     temp_atom_list = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     for atom in atom_list:
