@@ -75,6 +75,8 @@ def Check_argv(argv):
         print e
         sys.exit()
 
+    if len(opts)==0:
+        print "Use 'G4Analysis.py -h' to see the help information "
 
     for a,b in opts:
         if a == "-p" :
@@ -211,8 +213,8 @@ if __name__=="__main__":
                 list_output.append(outputname)
 
         else:
-            l1=Simple_atom.Get_list(resu["coor_file"],True)
-            l2=Simple_atom.Get_list(resu["coor_file"],False)
+            l1=Simple_atom.Get_residue(resu["coor_file"],True)
+            l2=Simple_atom.Get_residue(resu["coor_file"],False)
 
             list_group_1.append(l1)
             list_group_2.append(l2)
@@ -249,8 +251,8 @@ if __name__=="__main__":
                 list_output.append(outputname)
 
         else:
-            l1=Simple_atom.Get_list(resu["coor_file"],True)
-            l2=Simple_atom.Get_list(resu["coor_file"],False)
+            l1=Simple_atom.Get_residue(resu["coor_file"],True)
+            l2=Simple_atom.Get_residue(resu["coor_file"],False)
 
             list_group_1.append(l1)
             list_group_2.append(l2)
@@ -277,7 +279,7 @@ if __name__=="__main__":
                 list_output.append(outputname)
 
         else:
-            l1=Simple_atom.Get_list(resu["coor_file"],True)
+            l1=Simple_atom.Get_residue(resu["coor_file"],True)
             list_group_1.append(l1)
             list_output.append(resu["output_file"])
 
