@@ -103,10 +103,11 @@ def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_n
 
     for ts in u.trajectory:
         time=float((ts.frame-1)*dt)
-        if time < float(begin):
-            continue
-        if time > float(end) and end !=-1:
-            break
+        if dt > 0.0:
+            if time < float(begin):
+                continue
+            if time > float(end) and end !=-1:
+                break
 
         if ts.frame % skip == 0 :
             for i in range(LIST_NUM):
