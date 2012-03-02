@@ -138,6 +138,8 @@ def Get_Residue_list(atom_list):
             seg_list.append([atom.residue_name,atom.residue_serial])
     return seg_list
 
+
+# rewrite it to Get_residue. so it should not be used.
 def Get_list(coor_file,show=True):
     ''' 
     Let users choose the base for group 1 and group 2 .
