@@ -208,18 +208,19 @@ def Get_parallel_fromTOP( coor_file, base_list_1, base_list_2):
             else:
                 pass
 
-    temp_list=list()
     for m in base_list_2:
         for n in residue_list:
             if n[1]==m:
-                temp_list.append(n)
+                base_name_list_2.append(n)
                 break
             else:
                 pass
-    base_name_list_2=temp_list
 
     base_atom_list_1=[DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list_1]
     base_atom_list_2=[DNA_matrix.Get_baseID_list(Atom_list,j) for j in base_list_2]
+
+#    print base_atom_list_1
+#    print base_atom_list_2
 
 
     r1=[]
@@ -233,6 +234,7 @@ def Get_parallel_fromTOP( coor_file, base_list_1, base_list_2):
     for m in range(len(base_name_list_1)):
         temp_list = [ [Atom_list[x-1].atom_coor_x*10, Atom_list[x-1].atom_coor_y*10,Atom_list[x-1].atom_coor_z*10] \
                 for x in base_atom_list_1[m] ]
+#        print temp_list
         result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list_1[m][0])
         c1.append(numpy.array(temp_list))
         r1.append(result)
@@ -240,6 +242,7 @@ def Get_parallel_fromTOP( coor_file, base_list_1, base_list_2):
     for m in range(len(base_name_list_2)):
         temp_list = [ [Atom_list[x-1].atom_coor_x*10, Atom_list[x-1].atom_coor_y*10,Atom_list[x-1].atom_coor_z*10] \
                 for x in base_atom_list_2[m] ]
+#        print temp_list
         result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list_2[m][0])
         c2.append(numpy.array(temp_list))
         r2.append(result)
