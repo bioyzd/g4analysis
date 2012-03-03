@@ -183,10 +183,11 @@ def Get_list(coor_file,show=True):
 
     return numlist1
 
-def Get_residue(atom_list,show=True):
+def Get_residue(coor_file,show=True):
     '''
     Get_residue is rewrite from Get_list. 
     '''
+    atom_list=Get_Simple_atom_list(coor_file)
     reside_list=Get_Residue_list(atom_list)
     chain=[]
     for reside in reside_list:
