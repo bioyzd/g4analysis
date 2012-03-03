@@ -69,6 +69,10 @@ def Check_argv(argv):
     begin=1
     end=-1
 
+    if len(argv)==1:
+        Usage()
+        sys.exit()
+
     try:
         opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","begin=","end=","rmsd","rise","twist"])
     except getopt.GetoptError,e:
@@ -117,15 +121,15 @@ def Check_argv(argv):
             except:
                 pass
 
-    if os.path.isfile(coor_file) and os.path.isfile(traj_file):
+    if os.path.isfile(coor_file):
         resu_hash["coor_file"]=coor_file
         resu_hash["traj_file"]=traj_file
         resu_hash["parm_file"]=parm_file
         resu_hash["output_file"]=output_file
 
-    if output_file=="" and parm_file=="":
-        print "Error: No file for output."
-        sys.exit()
+#    if output_file=="" and parm_file=="":
+#        print "Error: No file for output."
+#        sys.exit()
 
     resu_hash["skip"]=skip
     resu_hash["calcu_rmsd"]=calcu_rmsd
@@ -193,6 +197,17 @@ if __name__=="__main__":
         is_get_dt=True
 
     if resu["calcu_rise"]==True:
+        if resu["traj_file"]=="":
+            l1=Simple_atom.Get_residue(resu["coor_file"],True)
+            l2=Simple_atom.Get_residue(resu["coor_file"],False)
+
+            list_group_1.append(l1)
+            list_group_2.append(l2)
+            list_output.append(resu["output_file"])
+
+            parallel_analysis.Get_parallel_fromTOP(resu["coor_file"],list_group_1,list_group_2)
+            sys.exit()
+            
         if have_parm_file:
             fp=open(resu["parm_file"])
             lines=fp.readlines()
