@@ -114,6 +114,18 @@ def Rotate_matrix(ga,cv):
     ])
     return rm
 
+def Norm_matrix_in_row(matrix):
+    for i in range(3):
+        temp_vect=numpy.array([matrix[j,i] for j in range(3)])
+        temp_vect=temp_vect/math.sqrt(numpy.dot(temp_vect,temp_vect.T))
+#        print numpy.array(temp_vect)[0]
+        for j in range(3):
+            matrix[j,i]=numpy.array(temp_vect)[j]
+         #normalization the row.
+    return matrix
+
+
+
 def Rotate_2_vector(vector1, vector2):
     '''
     Get the average vector between the two vectors named vector1 and vector2.
