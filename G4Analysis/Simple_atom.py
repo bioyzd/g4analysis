@@ -102,6 +102,40 @@ def Get_Simple_atom_list(filename,crd_file=""):
 
     return simple_list
 
+def Get_atom_list(filename,crd_file=""):
+    '''
+    Read in a structure file like pdb,gro. return a Simple_atom class list.
+    rewrite from Get_Simple_atom_list
+    '''
+    atom_list=list()
+    if filename.endswith(".pdb"):
+        atom_list=PDB.Get_Atom_list(filename)
+    elif filename.endswith(".gro"):
+        atom_list=GRO.Get_Atom_list(filename)
+    elif filename.endswith(".top"):
+        if crd_file == "":
+            atom_list=amber_top.Read_top(filename)
+        else:
+            atom_list=amber_top.Read_crd(filename,crd_file)
+    else:
+        print "file name %s in invalid." %filename
+        return []
+
+    simple_list=dict()
+    for atom in atom_list:
+        simple=unit_atom.unit_atom(atom_name=atom.atom_name,\
+                atom_serial=atom.atom_serial,\
+                residue_name=atom.residue_name,\
+                residue_serial=atom.residue_serial,\
+                atom_coor_x=atom.atom_coor_x,\
+                atom_coor_y=atom.atom_coor_y,\
+                atom_coor_z=atom.atom_coor_z)
+        simple_list[simple.atom_serial]=simple
+
+    return simple_list
+
+
+
 def Check_list(atom_list):
     '''
     Check the atom list, the list which may be deleted some groups. It's used

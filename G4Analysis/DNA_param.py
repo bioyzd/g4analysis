@@ -3,11 +3,19 @@ import math
 import DNA_matrix
 
 def base_pair_parameters(rotation_1,rotation_2,origin_1,origin_2):
+    z1_v=numpy.array([rotation_1[i][2] for i in range(3)])
+    z2_v=numpy.array([rotation_2[i][2] for i in range(3)])
+
+    if numpy.dot(z1_v,z2_v.T) < 0:
+        for i in range(3):
+            for j in range(1,3):
+                rotation_2[i][j]=-rotation_2[i][j]
 
     y1_vector=numpy.array([rotation_1[i][1] for i in range(3)])
     y2_vector=numpy.array([rotation_2[i][1] for i in range(3)])
 
     gamma=math.acos(numpy.dot(y1_vector,y2_vector))  
+
     #calculate buckleopening angle.
     b0_vector=numpy.cross(y2_vector,y1_vector) 
     #buckle-opening axis
@@ -30,8 +38,6 @@ def base_pair_parameters(rotation_1,rotation_2,origin_1,origin_2):
 
     x_vector_temp_1=numpy.array([trans_orient_1[i,0] for i in range(3)])
     x_vector_temp_2=numpy.array([trans_orient_2[i,0] for i in range(3)])
-#    print x_vector_temp_1
-#    print x_vector_temp_2
     x_vector_temp_1=x_vector_temp_1/math.sqrt(numpy.dot(x_vector_temp_1,x_vector_temp_1.T))
     x_vector_temp_2=x_vector_temp_2/math.sqrt(numpy.dot(x_vector_temp_2,x_vector_temp_2.T))
 #    print x_vector_temp_1
@@ -39,10 +45,13 @@ def base_pair_parameters(rotation_1,rotation_2,origin_1,origin_2):
     y_vector_MBT=numpy.array([MBT_matirx[i,1] for i in range(3)])
 
     omega=math.acos(numpy.dot(x_vector_temp_1,x_vector_temp_2.T)) 
+
     cross_result_temp=numpy.cross(x_vector_temp_2,x_vector_temp_1) 
 
     if(numpy.dot(cross_result_temp,y_vector_MBT.T)<0):
-        omega=-omega 
+        omega=-abs(omega)
+    else:
+        omega=abs(omega)
 
     x_vector_MBT=numpy.array([MBT_matirx[i,0] for i in range(3)])
 
@@ -51,7 +60,9 @@ def base_pair_parameters(rotation_1,rotation_2,origin_1,origin_2):
     cross_b0_xmat_temp=numpy.cross(b0_vector,x_vector_MBT) 
 
     if(numpy.dot(cross_b0_xmat_temp,y_vector_MBT)<0):
-        phi= - phi 
+        phi= - abs(phi)
+    else:
+        phi=abs(phi)
 
     kappa=gamma * math.cos(phi) 
     sigma=gamma * math.sin(phi) 
@@ -108,7 +119,9 @@ def base_step_parameters(rotation_1,rotation_2,origin_1,origin_2):
     cross_result_temp=numpy.cross(y_vector_temp_1,y_vector_temp_2) 
 
     if(numpy.dot(cross_result_temp,z_vector_MST)<0):
-        omega=-omega 
+        omega=-abs(omega) 
+    else:
+        omega=abs(omega)
     # // for omega
 
     phi=math.acos(numpy.dot(rt_vector,y_vector_MST.T)) 
@@ -116,7 +129,9 @@ def base_step_parameters(rotation_1,rotation_2,origin_1,origin_2):
     cross_rt_ymat_temp=numpy.cross(rt_vector,y_vector_MST)
 
     if(numpy.dot(cross_rt_ymat_temp,z_vector_MST)<0):
-        phi= - phi 
+        phi= - abs(phi) 
+    else:
+        phi=abs(phi)
     #//for phi 
 
     kappa=gamma * math.cos(phi) 
@@ -133,10 +148,18 @@ def base_step_parameters(rotation_1,rotation_2,origin_1,origin_2):
     twist=omega /math.pi * 180 
     tilt=sigma/math.pi * 180 
 
-    return shift,slide,rise,roll,twist,tilt
+    return shift,slide,rise,tilt,roll,twist
 
 
 def middle_frame(rotation_1,rotation_2,origin_1,origin_2):
+
+    z1_v=numpy.array([rotation_1[i][2] for i in range(3)])
+    z2_v=numpy.array([rotation_2[i][2] for i in range(3)])
+
+    if numpy.dot(z1_v,z2_v.T) < 0:
+        for i in range(3):
+            for j in range(1,3):
+                rotation_2[i][j]=-rotation_2[i][j]
 
     y1_vector=[rotation_1[i][1] for i in range(3)]
     y2_vector=[rotation_2[i][1] for i in range(3)]
