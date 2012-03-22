@@ -1,0 +1,3 @@
+2012.03.03
+1.The atom serial in coor_file (PDB,gro,etc) should be start with 1, or it will give a wrong result. 
+I'm not prepare to repair it soon.

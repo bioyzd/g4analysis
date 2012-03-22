@@ -201,11 +201,7 @@ if __name__=="__main__":
             l1=Simple_atom.Get_residue(resu["coor_file"],True)
             l2=Simple_atom.Get_residue(resu["coor_file"],False)
 
-            list_group_1.append(l1)
-            list_group_2.append(l2)
-            list_output.append(resu["output_file"])
-
-            parallel_analysis.Get_parallel_fromTOP(resu["coor_file"],list_group_1,list_group_2)
+            parallel_analysis.Get_parallel_fromTOP(resu["coor_file"],l1,l2)
             sys.exit()
             
         if have_parm_file:

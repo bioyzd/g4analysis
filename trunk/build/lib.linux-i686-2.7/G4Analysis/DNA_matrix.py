@@ -87,6 +87,7 @@ def Get_group_rotmat(group_rotate_list,group_size):
     return z_axis,origin
 
 def Get_baseID_list(atom_list,base_serial):
+
     atom_list = Simple_atom.Get_Atom_in_residue(atom_list, base_serial)
     temp_atom_list = [0, 0, 0, 0, 0, 0, 0, 0, 0]
     for atom in atom_list:
@@ -112,6 +113,18 @@ def Rotate_matrix(ga,cv):
     [ (1- cos(ga))*cv[0]*cv[2]-cv[1]* sin(ga),  (1- cos(ga))*cv[1]*cv[2] + cv[0]* sin(ga),  cos(ga)+(1- cos(ga))*cv[2]**2 ]
     ])
     return rm
+
+def Norm_matrix_in_row(matrix):
+    for i in range(3):
+        temp_vect=numpy.array([matrix[j,i] for j in range(3)])
+        temp_vect=temp_vect/math.sqrt(numpy.dot(temp_vect,temp_vect.T))
+#        print numpy.array(temp_vect)[0]
+        for j in range(3):
+            matrix[j,i]=numpy.array(temp_vect)[j]
+         #normalization the row.
+    return matrix
+
+
 
 def Rotate_2_vector(vector1, vector2):
     '''
