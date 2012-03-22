@@ -21,11 +21,7 @@ import DNA_matrix
 
 def Get_parm_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name,CALCU="step",skip=1, dt=1,begin=0,end=-1):
     '''
-    Reading the traj file and the coordinate file like *.pdb or *.gro. With the base serial choosed,  get the
-    rotation matrix for this base. and write it's to a output file with some syntax.
-    base_list_1 format list(list())
-    base_list_2 format list(list())
-    output_name format list()
+    Note: this function not finish yet.
     '''
     print "  init......"
 #    if coor_file.endswith('.top'):
