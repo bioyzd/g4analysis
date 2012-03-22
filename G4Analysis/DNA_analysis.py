@@ -2,31 +2,6 @@
 #-*- coding:utf-8 -*-
 '''
 Created at 2012.03.06
-@version: 0.0.3
-@change:\n
-    - 2010.01.14.
-        - Create this file.
-    - 2010.01.18\n
-        - Test the function B{Get_rotate_matrix()}
-        - Add the function B{Write_rotate_matrix()}
-        - Add the function B{Rotate_2_vector()}
-        - Finished the function B{Get_parallel_result()},  but not test it.
-    - 2010.01.19\n
-        - Modified some bugs. 
-            - Calculate the angle between the two vectors.
-            - Close the file after writting.
-            - modified a bug on generate rotation matirx
-            - modified a bug on calculate the origin vector for 2 and 4 base in a group.
-    - 2011.02.01\n
-        - Modified this module, so both *.pdb and *.gro are allowd for coordinate file.
-    - 2011.02.18\n
-        - Modified a bug. change all the reside to residue.
-    - 2011.03.18.\n
-        - Rewrite some functions.
-    - 2011.03.20.\n
-        - write functions for calculate RMSD.
-    - 2011.04.03.\n
-        - modified the output, change from print to usage.echo
 '''
 
 import Simple_atom
@@ -44,7 +19,7 @@ from numpy import dot
 
 import DNA_matrix
 
-def Get_DNA_result(traj_file, coor_file, base_list_1, base_list_2, output_name,skip=1, dt=1,begin=0,end=-1):
+def Get_parm_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name,CALCU="step",skip=1, dt=1,begin=0,end=-1):
     '''
     Reading the traj file and the coordinate file like *.pdb or *.gro. With the base serial choosed,  get the
     rotation matrix for this base. and write it's to a output file with some syntax.
