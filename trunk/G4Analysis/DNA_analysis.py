@@ -22,12 +22,20 @@ import DNA_matrix
 def Get_parm_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name,CALCU="step",skip=1, dt=1,begin=0,end=-1):
     '''
     Note: this function not finish yet.
+    base_list_1=[[base or base pair],[base or base pair],...]
+    base_list_2=[[base or base pair],[base or base pair],...]
     '''
     print "  init......"
 #    if coor_file.endswith('.top'):
 #        Atom_list=amber_top
     START_TIME=Time.time()
-    LIST_NUM=len(base_list_1)
+    if len(base_list_1)==len(base_list_2):
+        LIST_NUM=len(base_list_1)
+    else:
+        print "ERROR: The length of the base list not match."
+        return -1
+    if len(output_name)!=LIST_NUM:
+        print "ERROR: The number of the output file not match the size of the base list."
 
     Atom_list=Simple_atom.Get_Simple_atom_list(coor_file)
     residue_list=Simple_atom.Get_Residue_list(Atom_list)
@@ -57,7 +65,10 @@ def Get_parm_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name
             fp.write("%d\t " %j)
         fp.write("\n")
         fp.write("#skip:%d\n" %skip)
-        fp.write("#time(ns)   distance(A)\t   angle(degree)    RMSD1(A)\t    RMSD2(A)\n")
+        if CALCU=="step":
+            fp.write("#  shift       slide        rise        tilt        roll       twist\n")
+        else:
+            fp.write("#  shear     stretch     stagger      buckle   propeller     opening\n")
         fp.close()
 
 #        base_name_list_1.append( [residue_list[j-1] for j in base_list_1[i]])
@@ -119,44 +130,37 @@ def Get_parm_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name
                 for m in range(len(base_name_list_1[i])):
                     temp_list = [ [ts._x[x-1], ts._y[x-1], ts._z[x-1]] for x in base_atom_list_1[i][m] ]
                     result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list_1[i][m][0])
-#base_name_list_1[index of the groups][index of the base of group 1][base_name,base_serial]
-                    c1.append(numpy.array(temp_list))
-                    r1.append(result)
+                    #base_name_list_1[index of the groups][index of the base of group 1][base_name,base_serial]
+                    r1.append(result[0])
+                    c1.append(result[1])
 
                 for m in range(len(base_name_list_2[i])):
                     temp_list = [ [ts._x[x-1], ts._y[x-1], ts._z[x-1]] for x in base_atom_list_2[i][m] ]
                     result = DNA_matrix.Get_rotate_matrix(numpy.array(temp_list), base_name_list_2[i][m][0])
-                    c2.append(numpy.array(temp_list))
-                    r2.append(result)
+                    r2.append(result[0])
+                    c2.append(result[1])
 
-                orient_group_1,origin_group_1 = DNA_matrix.Get_group_rotmat(r1,len(base_name_list_1[i]))
-                orient_group_2,origin_group_2 = DNA_matrix.Get_group_rotmat(r2,len(base_name_list_2[i]))
-                RMSD1=DNA_matrix.Get_group_RMSD(base_name_list_1[i],c1,origin_group_1,orient_group_1)
-                RMSD2=DNA_matrix.Get_group_RMSD(base_name_list_2[i],c2,origin_group_2,orient_group_2)
-    
-                if numpy.dot(orient_group_1, orient_group_2)<0:
-                    orient_group_2 = orient_group_2*(-1)
+                fp = open(output_name[i], 'a')
 
-                orient_total = DNA_matrix.Rotate_2_vector(orient_group_1, orient_group_2)
-                dist_vector = numpy.array(origin_group_2)-numpy.array(origin_group_1)
-
-                dist = abs(dot(orient_total, dist_vector))
-                gamma = dot(orient_group_1, orient_group_2) 
-                gamma = math.acos(gamma)*180/3.1416
-
+                if CALCU=="pair":
+                    a=DNA_param.base_pair_parameters(r1[0],r2[0],c1[0],c2[0])
+                    fp.write("%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f\n" %(a[0],a[1],a[2],a[3],a[4],a[5]))
+                else:
+                    middle_r1,middle_c1=DNA_param.middle_frame(r1[0],r1[1],c1[0],c1[1])
+                    middle_r2,middle_c2=DNA_param.middle_frame(r2[0],r2[1],c2[0],c2[1])
+                    a=DNA_param.base_step_parameters(middle_r1,middle_r2,middle_c1,middle_c2)
+                    fp.write("%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f\n" %(a[0],a[1],a[2],a[3],a[4],a[5]))
 
                 if ts.frame % 10 ==0 and i==0:
                     NOW_TIME=Time.time()
                     usage.echo("  analysis frame %6d, time %8.1f ps, time used %8.2f s\r" %(ts.frame, time,NOW_TIME-START_TIME))
 
-                fp = open(output_name[i], 'a')
-                fp.write( " %7.4f\t  %6.3f\t   %6.3f\t    %6.4f\t   %6.4f\n" %(time/1000, dist, gamma,RMSD1,RMSD2))
                 fp.close()
 
-    print "The parallel analysis finished"
+    print "The DNA helical analysis finished"
     print "The result are in file: %s" %output_name
 
-def Get_para_fromTOP( coor_file, base_list_1, base_list_2,CALCU="step"):
+def Get_para_fromTOP( coor_file, base_list_1, base_list_2,CALCU="step",PRINT=True):
     '''
     get pair parameters from coor_file
     '''
@@ -214,9 +218,17 @@ def Get_para_fromTOP( coor_file, base_list_1, base_list_2,CALCU="step"):
         c2.append(result[1])
 
     if CALCU=="pair":
-        return DNA_param.base_pair_parameters(r1[0],r2[0],c1[0],c2[0])
+        a=DNA_param.base_pair_parameters(r1[0],r2[0],c1[0],c2[0])
+        if PRINT:
+            print "   shear     stretch     stagger      buckle   propeller     opening"
+            print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])
+        return a
     else:
         middle_r1,middle_c1=DNA_param.middle_frame(r1[0],r1[1],c1[0],c1[1])
         middle_r2,middle_c2=DNA_param.middle_frame(r2[0],r2[1],c2[0],c2[1])
-        return  DNA_param.base_step_parameters(middle_r1,middle_r2,middle_c1,middle_c2)
+        a=DNA_param.base_step_parameters(middle_r1,middle_r2,middle_c1,middle_c2)
+        if PRINT:
+            print "   shift       slide        rise        tilt        roll       twist"
+            print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])
+        return a
 
