@@ -1,0 +1,55 @@
+==================
+G4Analysis
+==================
+
+---------------
+Introduction
+---------------
+
+
+Parallel analysis.py is used for calculate the distance and angle between two
+bases groups. usually a group contain 1, 2 or 4 bases in a plane.
+The angle is useful to analysis the base stack. Two stack bases usually have a
+small angle and 
+uctuation.
+If the opition "--rmsd" used, only one bases group will be selected and the RMSD
+in z-axis for this group will be calculated.
+
+.. image:: images/G4_model.png
+   :height: 139 
+   :width: 318
+
+
+------------
+Usage
+------------
+
+
+**Files**
+
+========  ======  ===========  ================================
+Option    Type    Filename     Description
+========  ======  ===========  ================================
+-p        Input   coor_file    Structure fie: gro pdb etc.
+-f        Input   traj_file    Trajectory: xtc trr.
+-o        Input   output_file  xvgr/xmgr file.
+-i        Input   para_an.in   input parmarter file.
+========  ======  ===========  ================================
+
+**Other options**
+
+========  ======  ===========  ============================================
+Option    Type    Value        Description
+========  ======  ===========  ============================================
+--rise    bool    False        Calculate the distance of DNA bases groups.
+--twist   bool    False        Calculate the twist of DNA bases groups.
+--rmsd    bool    False        skip Calculate the RMSD of DNA bases groups.
+--begin   int     0            First frame (ps) to read from trajectory.
+--end     int     -1           Last frame (ps) to read from trajectory.
+--skip    int     1            Get frames when frame MOD skip = 0
+-h        bool    yes          Print help info and quit
+========  ======  ===========  ============================================
+
+-----------------------------
+Some details of the Algorithm
+-----------------------------
