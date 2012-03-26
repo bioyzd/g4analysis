@@ -80,11 +80,17 @@ def test_Get_parallel_result():
 #    list2=[3,9,17,21]
     list1=[[2,8,14,20]]
     list2=[[3,9,15,21]]
-#    traj_file="/home/zhuh/Mount/99/ExPag/G4_ligand/2GKU-NMR/traj.xtc"
-#    coor_file="/home/zhuh/Mount/99/ExPag/G4_ligand/2GKU-NMR/origin.pdb"
     global traj_file
     global gro_file
     parallel_analysis.Get_parallel_result(traj_file,gro_file,list1,list2,["parallel.xvg"])
+
+def test_DNA_analysis():
+    traj_file="DNA.xtc"
+    coor_file="DNA.pdb"
+    list1=[[1,36],[2,35]]
+    list2=[[2,35],[3,34]]
+    result=["helical1.xvg","helical2.xvg"]
+    DNA_analysis.Get_parm_fromTRJ(traj_file,coor_file,list1,list2,result,"step")
 
 def test_Get_parallel_fromTOP():
 #    list1=[2]
@@ -145,31 +151,19 @@ def test_Get_pair_fromTOP():
    
     print "-*"*35
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[1],[24],"pair")
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     print "-*"*35
 
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[1,24],[2,23])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[2,23],[3,22])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[3,22],[4,21])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[4,21],[5,20])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[5,20],[6,19])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[6,19],[7,18])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[7,18],[8,17])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[8,17],[9,16])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[9,16],[10,15])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[10,15],[11,14])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[11,14],[12,13])
-    print "%8.2f    %8.2f    %8.2f    %8.2f    %8.2f    %8.2f" %(a[0],a[1],a[2],a[3],a[4],a[5])   
 
 
 
@@ -191,4 +185,5 @@ if __name__=="__main__":
 #    test_amber_top()
 #    test_move_atom()
 #    test_middle_frame()
-    test_Get_pair_fromTOP()
+#    test_Get_pair_fromTOP()
+    test_DNA_analysis()
