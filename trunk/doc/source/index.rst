@@ -3,15 +3,12 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to MDPackage's documentation!
+Welcome to G4Analysis's documentation!
 =====================================
 
-The MDPackage is a program package write in python mostly base on the
-MDAnalysis Pacakge. The aim of this package is for editing the input and
-output files of MD software like Gromacs, Amber, and NAMD. It also used for
-reading and analyzing the MD trajectory, which mostly in binary format and
-cannot read directly.
-
+The G4Analysis is a program package write in python mostly base on 
+MDAnalysis Pacakge and 3DNA package. The aim of this package is analysis the G-quartets structural parameters, mostly rise and twist
+from the molecular dynamics trajectories. MD softwares like Gromacs, Amber, and NAMD trajectories all can be read in this program. 
 
 .. toctree::
    :maxdepth: 3

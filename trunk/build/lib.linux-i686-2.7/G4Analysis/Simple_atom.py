@@ -30,37 +30,6 @@ import string
 import re
 import os
 
-
-def PDB_2_Simple_atom(PDB_atom_class):
-    '''
-    convert a PDB class to a Simple_atom class.
-    '''
-    simple=unit_atom.unit_atom()
-    simple.atom_name=PDB_atom_class.atom_name
-    simple.atom_serial=PDB_atom_class.atom_serial
-    simple.residue_name=PDB_atom_class.residue_name
-    simple.residue_serial=PDB_atom_class.residue_sequence_number
-    simple.atom_coor_x=PDB_atom_class.atom_coor_x
-    simple.atom_coor_y=PDB_atom_class.atom_coor_y
-    simple.atom_coor_z=PDB_atom_class.atom_coor_z
-
-    return simple
-
-def GRO_2_Simple_atom(GRO_atom_class):
-    '''
-    convert a GRO class to a Simple_atom class.
-    '''
-    simple=unit_atom.unit_atom()
-    simple.atom_name=GRO_atom_class.atom_name
-    simple.atom_serial=GRO_atom_class.atom_serial
-    simple.residue_name=GRO_atom_class.residue_name
-    simple.residue_serial=GRO_atom_class.residue_serial
-    simple.atom_coor_x=GRO_atom_class.atom_coor_x
-    simple.atom_coor_y=GRO_atom_class.atom_coor_y
-    simple.atom_coor_z=GRO_atom_class.atom_coor_z
-    
-    return simple
-
 def Get_Atom_in_residue(atom_list,resid):
     '''
     Return a atom class list which contain the atoms in a residue.
@@ -104,7 +73,7 @@ def Get_Simple_atom_list(filename,crd_file=""):
 
 def Get_atom_list(filename,crd_file=""):
     '''
-    Read in a structure file like pdb,gro. return a Simple_atom class list.
+    Read in a structure file like pdb,gro. return a Simple_atom class dict.
     rewrite from Get_Simple_atom_list
     '''
     atom_list=list()
@@ -162,6 +131,9 @@ def Check_list(atom_list):
 
 
 def Get_Residue_list(atom_list):
+    '''
+    return a residue list from atom list
+    '''
     seg_list=list()
     seg_list.append([atom_list[0].residue_name,atom_list[0].residue_serial])
     '''
@@ -171,51 +143,6 @@ def Get_Residue_list(atom_list):
         if atom.residue_serial > seg_list[-1][1]:
             seg_list.append([atom.residue_name,atom.residue_serial])
     return seg_list
-
-
-# rewrite it to Get_residue. so it should not be used.
-def Get_list(coor_file,show=True):
-    ''' 
-    Let users choose the base for group 1 and group 2 .
-    '''
-    atom_list=Get_Simple_atom_list(coor_file)
-    reside_list=Get_Residue_list(atom_list)
-#    print reside_list
-    chain=[]
-    for [residue_name,residue_serial] in reside_list:
-        if residue_name != "WAT" and residue_name!="SOL":
-            if "A" in residue_name \
-                    or "T" in residue_name \
-                    or "C" in residue_name \
-                    or "G" in residue_name \
-                    or "U" in residue_name : 
-                chain.append(residue_name)  
-            else:
-                pass
-        else:
-            pass
-#    print chain
-    if show== True:
-        for i in range(len(chain)):
-            print "%4d\t (%8s )" % (i+1,chain[i])
-
-    while True:
-        list1=raw_input("Choose the reside numbers for the group (like 1 2 3 4):")
-        list1=re.split("\s+",string.strip(list1))
-        numlist1=[]
-        for aa in list1:
-            numlist1.append(int(aa))
-        if len(numlist1) not in [1,2,4]:
-            print "choose %d base is invalid." %len(numlist1)
-            continue
-        elif max(numlist1) > chain[-1][1]:
-            print "base number %d is out of range." %max(numlist1) 
-            continue
-        else:
-            print "you choose base : ",numlist1
-            break
-
-    return numlist1
 
 def Get_residue(coor_file,show=True):
     '''

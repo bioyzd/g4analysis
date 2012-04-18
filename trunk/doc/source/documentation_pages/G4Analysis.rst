@@ -24,7 +24,6 @@ in z-axis for this group will be calculated.
 Usage
 ------------
 
-
 **Files**
 
 ========  ======  ===========  ================================
@@ -49,6 +48,17 @@ Option    Type    Value        Description
 --skip    int     1            Get frames when frame MOD skip = 0
 -h        bool    yes          Print help info and quit
 ========  ======  ===========  ============================================
+
+Two modes to use this program.
+
+Interactive Mode.
+-----------------
+
+G4Analysis -p coor_file -f traj_file -o output_file --rise/twist/rmsd [--begin/end/skip]
+
+Input File Mode.
+-----------------
+G4Analysis -p coor_file -f traj_file -i input_file [--begin/end/skip]
 
 -----------------------------
 Some details of the Algorithm
