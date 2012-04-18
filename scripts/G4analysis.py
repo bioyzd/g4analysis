@@ -14,7 +14,7 @@ Create on 2011-01-19\n
     2011-04-26.\n 
         - Modified the usage part.
     2012.02.24.\n
-        - Combining the twist_in_GDNA part to this script.
+        - Combining the G4_twist part to this script.
 '''
 
 import sys
@@ -23,8 +23,8 @@ import re
 import getopt
 import os
 from G4Analysis import Simple_atom
-from G4Analysis import parallel_analysis
-from G4Analysis import twist_in_GDNA
+from G4Analysis import G4_rise
+from G4Analysis import G4_twist
 from G4Analysis import usage
 
 def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
@@ -201,7 +201,7 @@ if __name__=="__main__":
             l1=Simple_atom.Get_residue(resu["coor_file"],True)
             l2=Simple_atom.Get_residue(resu["coor_file"],False)
 
-            parallel_analysis.Get_parallel_fromTOP(resu["coor_file"],l1,l2)
+            G4_rise.Get_parallel_fromTOP(resu["coor_file"],l1,l2)
             sys.exit()
             
         if have_parm_file:
@@ -232,11 +232,11 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],\
+            G4_rise.Get_rise_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_group_2,list_output,resu["skip"],float(dt),\
                     resu["begin"],resu["end"])
         else:
-            parallel_analysis.Get_parallel_result(resu["traj_file"],resu["coor_file"],\
+            G4_rise.Get_rise_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_group_2,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
 
@@ -270,11 +270,11 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
+            G4_twist.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_group_2,list_output,resu["skip"],float(dt),\
                     resu["begin"],resu["end"])
         else:
-            twist_in_GDNA.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
+            G4_twist.Get_twist_in_GDNA2(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_group_2,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
 
@@ -295,11 +295,11 @@ if __name__=="__main__":
             list_output.append(resu["output_file"])
 
         if is_get_dt:
-            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],\
+            G4_rise.Get_RMSD_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_output,resu["skip"],float(dt),\
                     resu["begin"],resu["end"])
         else:
             print list_output
-            parallel_analysis.Get_RMSD_result(resu["traj_file"],resu["coor_file"],\
+            G4_rise.Get_RMSD_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
