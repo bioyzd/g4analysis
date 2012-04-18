@@ -39,7 +39,6 @@ from math import cos, sin, sqrt
 import math
 import numpy
 from numpy import matrix
-from numpy import dot
 
 import DNA_matrix
 
@@ -169,8 +168,8 @@ def Get_parallel_result(traj_file, coor_file, base_list_1, base_list_2, output_n
                 orient_total = DNA_matrix.Rotate_2_vector(orient_group_1, orient_group_2)
                 dist_vector = numpy.array(origin_group_2)-numpy.array(origin_group_1)
 
-                dist = abs(dot(orient_total, dist_vector))
-                gamma = dot(orient_group_1, orient_group_2) 
+                dist = abs(numpy.dot(orient_total, dist_vector))
+                gamma = numpy.dot(orient_group_1, orient_group_2) 
                 gamma = math.acos(gamma)*180/3.1416
 
 
@@ -259,8 +258,8 @@ def Get_parallel_fromTOP( coor_file, base_list_1, base_list_2):
     orient_total = DNA_matrix.Rotate_2_vector(orient_group_1, orient_group_2)
     dist_vector = numpy.array(origin_group_2)-numpy.array(origin_group_1)
 
-    dist = abs(dot(orient_total, dist_vector))
-    gamma = dot(orient_group_1, orient_group_2) 
+    dist = abs(numpy.dot(orient_total, dist_vector))
+    gamma = numpy.dot(orient_group_1, orient_group_2) 
     gamma = math.acos(gamma)*180/3.1416
 
     print  "rise:  %6.3f\tangle:   %6.3f\tRMSD_1:    %6.4f\tRMSD_2:   %6.4f\n" %(dist, gamma,RMSD1,RMSD2)

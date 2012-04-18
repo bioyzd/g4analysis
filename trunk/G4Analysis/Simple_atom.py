@@ -104,7 +104,7 @@ def Get_Simple_atom_list(filename,crd_file=""):
 
 def Get_atom_list(filename,crd_file=""):
     '''
-    Read in a structure file like pdb,gro. return a Simple_atom class list.
+    Read in a structure file like pdb,gro. return a Simple_atom class dict.
     rewrite from Get_Simple_atom_list
     '''
     atom_list=list()
