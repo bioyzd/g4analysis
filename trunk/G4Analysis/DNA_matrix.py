@@ -34,22 +34,16 @@ def Get_rotate_matrix(experim_coor, base_name):
     @return:  rotation matrix in list[0] and origin coordinate in list[1]
     '''
 
-    N = 0
     if 'A' in base_name :
         standard_coor = atomlib.BASE_A_array 
-        N = 9
     elif 'T' in base_name :
         standard_coor = atomlib.BASE_T_array 
-        N = 6
     elif 'C' in base_name:
         standard_coor = atomlib.BASE_C_array 
-        N = 6
     elif 'G' in base_name :
         standard_coor = atomlib.BASE_G_array 
-        N = 9
     elif 'U' in base_name :
         standard_coor = atomlib.BASE_U_array 
-        N = 6
     else:
         print "The residue name %s not found in my standard lib." %base_name
         sys.exit()
