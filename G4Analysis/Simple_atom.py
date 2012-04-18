@@ -74,7 +74,8 @@ def Get_Simple_atom_list(filename,crd_file=""):
 def Get_atom_list(filename,crd_file=""):
     '''
     Read in a structure file like pdb,gro. return a Simple_atom class dict.
-    rewrite from Get_Simple_atom_list
+    rewrite from Get_Simple_atom_list, use dict but not list. for the bug
+    which may happen when the atom serial in pdb file not start from 1.
     '''
     atom_list=list()
     if filename.endswith(".pdb"):
