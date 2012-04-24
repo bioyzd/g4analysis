@@ -163,12 +163,7 @@ def Print_Description():
     '''
     print "DESCRIPTION"
     print "-----------"
-    a='''Parallel_analysis.py is used for calculate the distance and angle between two bases groups.
-usually a group contain 1, 2 or 4 bases in a plane.
-The angle is useful to analysis the base stack. Two stack bases usually have a small angle
-and fluctuation.
-If the opition "--rmsd" used, only one bases group will be selected and the RMSD in z-axis 
-for this group will be calculated.
+    a='''G4_analysis.py is used for calculate the rise and twist of two G-quartet layers.
 Usage:
     interactive format:
     using -o result.xvg
