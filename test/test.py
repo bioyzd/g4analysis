@@ -11,9 +11,9 @@ Create on 2011-01-15.
 
 '''
 import numpy
-from G4Analysis import parallel_analysis
+from G4Analysis import G4_rise
 from G4Analysis import DNA_matrix
-from G4Analysis import twist_in_GDNA
+from G4Analysis import G4_twist
 from G4Analysis import DNA_param
 from G4Analysis import DNA_analysis
 import unittest
@@ -165,6 +165,15 @@ def test_Get_pair_fromTOP():
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[10,15],[11,14])
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[11,14],[12,13])
 
+def test_Get_Dihedral_fromTOP():
+    pdb_file="bdl084.pdb"
+    DNA_analysis.Get_Dihedral_fromTOP(pdb_file,[1,2,3,4,5,6,7,8,9,10,11,12],True)
+
+def test_Get_Dihedral_fromTRJ():
+    coor_file="/home/zhuh/zhuh@lab/backup/data/ARTICLE2_PACK/GMX4.5/143D_bsc0/res.gro"
+    traj_file="/home/zhuh/zhuh@lab/backup/data/ARTICLE2_PACK/GMX4.5/143D_bsc0/res.xtc"
+    DNA_analysis.Get_Dihedral_fromTRJ(traj_file,coor_file,[1,2],["dihehral1.txt","dihehral2.txt"])
+
 
 
 if __name__=="__main__":
@@ -185,5 +194,7 @@ if __name__=="__main__":
 #    test_amber_top()
 #    test_move_atom()
 #    test_middle_frame()
-#    test_Get_pair_fromTOP()
-    test_DNA_analysis()
+#    test_Get_pair_fromTOP#()
+#    test_DNA_analysis()
+#    test_Get_Dihedral_fromTOP()
+    test_Get_Dihedral_fromTRJ()

@@ -193,7 +193,9 @@ def middle_frame(rotation_1,rotation_2,origin_1,origin_2):
 
     return numpy.array(middle_matirx),middle_origin
 
-def Get_dihedral(atom1, atom2, atom3, atom4):
+
+
+def Calc_dihedral(atom1, atom2, atom3, atom4):
     b1=numpy.array([atom2.atom_coor_x-atom1.atom_coor_x,\
             atom2.atom_coor_y-atom1.atom_coor_y,\
             atom2.atom_coor_z-atom1.atom_coor_z])
@@ -209,5 +211,79 @@ def Get_dihedral(atom1, atom2, atom3, atom4):
     phi=math.atan2( numpy.dot( math.sqrt(numpy.dot(b2,b2))*b1 , numpy.cross(b2,b3) ),\
             numpy.dot( numpy.cross(b1,b2) , numpy.cross(b2,b3) ))
 
-    
     return phi
+
+
+
+def Get_Dihedral(Atom_list, base_serial):
+    '''
+    calculate the dihedral from the top file.
+
+    '''
+
+    for i in Atom_list:
+  #      print Atom_list[i].atom_name
+        if Atom_list[i].atom_name   in ["O3'","O3*"] and Atom_list[i].residue_serial==base_serial-1: 
+            index_O3_0=i
+
+        elif Atom_list[i].atom_name in ["P","H5T"]   and Atom_list[i].residue_serial==base_serial:
+            index_P=i
+
+        elif Atom_list[i].atom_name in ["O5'","O5*"] and Atom_list[i].residue_serial==base_serial:
+            index_O5=i
+        elif Atom_list[i].atom_name in ["C5'","C5*"] and Atom_list[i].residue_serial==base_serial:
+            index_C5=i
+        elif Atom_list[i].atom_name in ["C4'","C4*"] and Atom_list[i].residue_serial==base_serial:
+            index_C4=i
+        elif Atom_list[i].atom_name in ["C3'","C3*"] and Atom_list[i].residue_serial==base_serial:
+            index_C3=i
+        elif Atom_list[i].atom_name in ["O3'","O3*"] and Atom_list[i].residue_serial==base_serial:
+            index_O3=i
+
+        elif Atom_list[i].atom_name in ["P","H3T"]   and Atom_list[i].residue_serial==base_serial+1:
+            index_P_2=i
+        elif Atom_list[i].atom_name in ["O5'","O5*"] and Atom_list[i].residue_serial==base_serial+1:
+            index_O5_2=i
+
+        elif Atom_list[i].atom_name in ["O4'","O4*"] and Atom_list[i].residue_serial==base_serial:
+            index_O4=i
+
+        elif Atom_list[i].atom_name in ["C1'","C1*"] and Atom_list[i].residue_serial==base_serial:
+            index_C1=i
+
+        elif Atom_list[i].atom_name in ["N9"] and Atom_list[i].residue_serial==base_serial and \
+                ("A" in Atom_list[i].residue_name or "G" in Atom_list[i].residue_name):
+            index_N_base=i
+        elif Atom_list[i].atom_name=="N1" and Atom_list[i].residue_serial==base_serial and \
+                ("C" in Atom_list[i].residue_name or "T" in Atom_list[i].residue_name):
+            index_N_base=i
+        elif Atom_list[i].atom_name=="C4" and Atom_list[i].residue_serial==base_serial and \
+                ("A" in Atom_list[i].residue_name or "G" in Atom_list[i].residue_name):
+            index_C_base=i
+        elif Atom_list[i].atom_name=="C2" and Atom_list[i].residue_serial==base_serial and \
+                ("C" in Atom_list[i].residue_name or "T" in Atom_list[i].residue_name):
+            index_C_base=i
+
+    try:
+        alpha =Calc_dihedral(Atom_list[index_O3_0],Atom_list[index_P ],Atom_list[index_O5 ],Atom_list[index_C5  ]) *180/math.pi
+    except:
+        alpha = "-"
+    try:
+        beta  =Calc_dihedral(Atom_list[index_P   ],Atom_list[index_O5],Atom_list[index_C5 ],Atom_list[index_C4  ]) *180/math.pi
+    except: 
+        beta = "-"
+    gamma =Calc_dihedral(Atom_list[index_O5  ],Atom_list[index_C5],Atom_list[index_C4 ],Atom_list[index_C3  ]) *180/math.pi
+    delta =Calc_dihedral(Atom_list[index_C5  ],Atom_list[index_C4],Atom_list[index_C3 ],Atom_list[index_O3  ]) *180/math.pi
+    try:
+        epslon=Calc_dihedral(Atom_list[index_C4  ],Atom_list[index_C3],Atom_list[index_O3 ],Atom_list[index_P_2 ]) *180/math.pi
+    except:
+        epslon = "-"
+    try:
+        zeta  =Calc_dihedral(Atom_list[index_C3  ],Atom_list[index_O3],Atom_list[index_P_2],Atom_list[index_O5_2]) *180/math.pi
+    except:
+        zeta = "-"
+
+    chi   =Calc_dihedral(Atom_list[index_O4],Atom_list[index_C1],Atom_list[index_N_base],Atom_list[index_C_base]) *180/math.pi
+
+    return [alpha,beta,gamma,delta,epslon,zeta,chi]
+
