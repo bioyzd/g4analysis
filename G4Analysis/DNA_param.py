@@ -193,3 +193,21 @@ def middle_frame(rotation_1,rotation_2,origin_1,origin_2):
 
     return numpy.array(middle_matirx),middle_origin
 
+def Get_dihedral(atom1, atom2, atom3, atom4):
+    b1=numpy.array([atom2.atom_coor_x-atom1.atom_coor_x,\
+            atom2.atom_coor_y-atom1.atom_coor_y,\
+            atom2.atom_coor_z-atom1.atom_coor_z])
+
+    b2=numpy.array([atom3.atom_coor_x-atom2.atom_coor_x,\
+            atom3.atom_coor_y-atom2.atom_coor_y,\
+            atom3.atom_coor_z-atom2.atom_coor_z])
+
+    b3=numpy.array([atom4.atom_coor_x-atom3.atom_coor_x,\
+            atom4.atom_coor_y-atom3.atom_coor_y,\
+            atom4.atom_coor_z-atom3.atom_coor_z])
+
+    phi=math.atan2( numpy.dot( math.sqrt(numpy.dot(b2,b2))*b1 , numpy.cross(b2,b3) ),\
+            numpy.dot( numpy.cross(b1,b2) , numpy.cross(b2,b3) ))
+
+    
+    return phi
