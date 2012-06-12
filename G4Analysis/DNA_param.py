@@ -209,9 +209,18 @@ def Calc_dihedral(atom1, atom2, atom3, atom4):
             atom4.atom_coor_z-atom3.atom_coor_z])
 
     phi=math.atan2( numpy.dot( math.sqrt(numpy.dot(b2,b2))*b1 , numpy.cross(b2,b3) ),\
-            numpy.dot( numpy.cross(b1,b2) , numpy.cross(b2,b3) ))
+            numpy.dot( numpy.cross(b1,b2) , numpy.cross(b2,b3) )) *180 /math.pi
+    if phi < -120:
+        phi_c="t"
+    elif phi < 0:
+        phi_c="g-"
+    elif phi < 120:
+        phi_c="g+"
+    else:
+        phi_c="t"
 
-    return phi
+
+    return phi,phi_c
 
 
 
@@ -264,26 +273,52 @@ def Get_Dihedral(Atom_list, base_serial):
                 ("C" in Atom_list[i].residue_name or "T" in Atom_list[i].residue_name):
             index_C_base=i
 
+    dihedral=dict()
+
     try:
-        alpha =Calc_dihedral(Atom_list[index_O3_0],Atom_list[index_P ],Atom_list[index_O5 ],Atom_list[index_C5  ]) *180/math.pi
+        alpha,alpha_c =Calc_dihedral(Atom_list[index_O3_0],Atom_list[index_P ],Atom_list[index_O5 ],Atom_list[index_C5  ]) 
     except:
         alpha = "-"
+        alpha_c="-"
     try:
-        beta  =Calc_dihedral(Atom_list[index_P   ],Atom_list[index_O5],Atom_list[index_C5 ],Atom_list[index_C4  ]) *180/math.pi
+        beta,beta_c  =Calc_dihedral(Atom_list[index_P   ],Atom_list[index_O5],Atom_list[index_C5 ],Atom_list[index_C4  ]) 
     except: 
         beta = "-"
-    gamma =Calc_dihedral(Atom_list[index_O5  ],Atom_list[index_C5],Atom_list[index_C4 ],Atom_list[index_C3  ]) *180/math.pi
-    delta =Calc_dihedral(Atom_list[index_C5  ],Atom_list[index_C4],Atom_list[index_C3 ],Atom_list[index_O3  ]) *180/math.pi
+        beta_c = "-"
+    gamma,gamma_c =Calc_dihedral(Atom_list[index_O5  ],Atom_list[index_C5],Atom_list[index_C4 ],Atom_list[index_C3  ]) 
+    delta,delta_c =Calc_dihedral(Atom_list[index_C5  ],Atom_list[index_C4],Atom_list[index_C3 ],Atom_list[index_O3  ]) 
     try:
-        epslon=Calc_dihedral(Atom_list[index_C4  ],Atom_list[index_C3],Atom_list[index_O3 ],Atom_list[index_P_2 ]) *180/math.pi
+        epslon,epslon_c=Calc_dihedral(Atom_list[index_C4  ],Atom_list[index_C3],Atom_list[index_O3 ],Atom_list[index_P_2 ]) 
     except:
         epslon = "-"
+        epslon_c="-"
+
     try:
-        zeta  =Calc_dihedral(Atom_list[index_C3  ],Atom_list[index_O3],Atom_list[index_P_2],Atom_list[index_O5_2]) *180/math.pi
+        zeta,zeta_c  =Calc_dihedral(Atom_list[index_C3  ],Atom_list[index_O3],Atom_list[index_P_2],Atom_list[index_O5_2]) 
     except:
         zeta = "-"
+        zeta_c = "-"
 
-    chi   =Calc_dihedral(Atom_list[index_O4],Atom_list[index_C1],Atom_list[index_N_base],Atom_list[index_C_base]) *180/math.pi
+    chi ,chi_c  =Calc_dihedral(Atom_list[index_O4],Atom_list[index_C1],Atom_list[index_N_base],Atom_list[index_C_base]) 
+    if chi < 0 or chi > 90:
+        chi_c="anti"
+    elif chi < 90 and chi > 0:
+        chi_c="syn"
 
-    return [alpha,beta,gamma,delta,epslon,zeta,chi]
+
+    dihedral[alpha ] = alpha
+    dihedral[beta  ] = beta
+    dihedral[gamma ] = gamma
+    dihedral[delta ] = delta
+    dihedral[zeta  ] = zeta
+    dihedral[epslon] = epslon
+    dihedral[chi   ] = chi
+    dihedral[alpha_c ] = alpha_c
+    dihedral[beta_c  ] = beta_c
+    dihedral[gamma_c ] = gamma_c
+    dihedral[delta_c ] = delta_c
+    dihedral[epslon_c] = epslon_c
+    dihedral[zeta_c  ] = zeta_c
+    dihedral[chi_c   ] = chi_c
+    return [alpha,beta,gamma,delta,epslon,zeta,chi,alpha_c,beta_c,gamma_c,delta_c,epslon_c,zeta_c,chi_c]
 
