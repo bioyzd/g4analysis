@@ -241,7 +241,9 @@ def Get_Dihedral_fromTOP( coor_file, base_list_1,PRINT=False ):
     Atom_list=Simple_atom.Get_atom_list(coor_file)
 
     if PRINT == True:
-        print "%12s%10s%10s%10s%10s%10s%10s%10s" %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi")
+        print "%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s"\
+                %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi",\
+                "alpha","beta","gamma","delta","epslon","zeta","chi")
 
     for m in base_list_1:
         resu=DNA_param.Get_Dihedral(Atom_list,m)   
@@ -253,6 +255,12 @@ def Get_Dihedral_fromTOP( coor_file, base_list_1,PRINT=False ):
                     print "%9s" %("-"*4), 
                 else:
                     print "%9.2f" %(resu[i]),
+            for i in range(7):
+                if resu[i]=="-":
+                    print "%7s" %("-"*4), 
+                else:
+                    print "%7s" %(resu[i+7]),
+
             print "" 
 
 #a        return [alpha,beta,gamma,delta,epslon,zeta,chi]
