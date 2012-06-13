@@ -26,9 +26,11 @@ from G4Analysis import Simple_atom
 from G4Analysis import G4_rise
 from G4Analysis import G4_twist
 from G4Analysis import usage
+from G4Analysis import DNA_analysis
 
 def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
         parm_file="para_analysis.in",skip=1,show_help="yes",\
+        calcu_helical="False", calcu_dihedral="False",\
         calcu_rise="False",calcu_twist="False",calcu_rmsd="False",begin=0,end=-1):
     '''
     print the usage information.
@@ -44,6 +46,8 @@ def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",
     print ""
     usage.Type_input()
     usage.Print_line()
+    usage.Show("--helical","bool",calcu_helical,"Calculate the helical parameters of nucleic acids.")
+    usage.Show("--dihedral","bool",calcu_dihedral,"Calculate the backbone dihedral parameters of nucleic acids.")
     usage.Show("--rise","bool",calcu_rise,"Calculate the distance of DNA bases groups.")
     usage.Show("--twist","bool",calcu_twist,"Calculate the twist of DNA bases groups.")
     usage.Show("--rmsd","bool",calcu_rmsd,"Calculate the RMSD of DNA bases groups.")
@@ -66,6 +70,8 @@ def Check_argv(argv):
     calcu_rmsd=False
     calcu_rise=False
     calcu_twist=False
+    calcu_helical=False
+    calcu_dihedral=False
     begin=1
     end=-1
 
@@ -74,7 +80,7 @@ def Check_argv(argv):
         sys.exit()
 
     try:
-        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","begin=","end=","rmsd","rise","twist"])
+        opts,args=getopt.getopt(sys.argv[1:],"p:f:o:i:h",["skip=","begin=","end=","rmsd","rise","twist","dihedral","helical"])
     except getopt.GetoptError,e:
         print e
         sys.exit()
@@ -103,6 +109,12 @@ def Check_argv(argv):
 
         elif a=="--twist":
             calcu_twist=True
+
+        elif a=="--dihedral":
+            calcu_dihedral=True
+
+        elif a=="--helical":
+            calcu_helical=True
 
         elif a=="-i":
             parm_file=b
@@ -135,10 +147,13 @@ def Check_argv(argv):
     resu_hash["calcu_rmsd"]=calcu_rmsd
     resu_hash["calcu_rise"]=calcu_rise
     resu_hash["calcu_twist"]=calcu_twist
+    resu_hash["calcu_dihedral"]=calcu_twist
+    resu_hash["calcu_helical"]=calcu_twist
     resu_hash["begin"]=begin
     resu_hash["end"]=end
 
     Usage(coor_file,traj_file,output_file,parm_file,skip,"no",\
+            calcu_helical,calcu_dihedral,\
             calcu_rise,calcu_twist,calcu_rmsd,begin,end)
 
     return resu_hash
@@ -149,7 +164,7 @@ def Print_ProgInfo():
     Print program information. the version, some notice and tips.
     '''
     print " "
-    print "  "*12,"-)","Parallel_analysis","(-"
+    print "  "*13,"-)","G4_analysis","(-"
     print " "
     print "  "*12,"-)"," Version: %s " %usage.version ,"(-" 
     print " "
@@ -187,10 +202,12 @@ if __name__=="__main__":
     list_output=list()
 
 
+# step 1, get the dt information of the trajectory.
     if resu["traj_file"].endswith("mdcrd") or resu["traj_file"].endswith("dcd"):
         dt=raw_input("Input the time step between frames for Amber trajectory file (ps).")
         is_get_dt=True
 
+# step 2, calculatin the rise paramters.
     if resu["calcu_rise"]==True:
         if resu["traj_file"]=="":
             l1=Simple_atom.Get_residue(resu["coor_file"],True)
@@ -235,7 +252,7 @@ if __name__=="__main__":
                     list_group_1,list_group_2,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
 
-
+# step 3, calculating the twise paramters.
     if resu["calcu_twist"]==True:
         if have_parm_file:
             fp=open(resu["parm_file"])
@@ -273,7 +290,7 @@ if __name__=="__main__":
                     list_group_1,list_group_2,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
 
-
+#step 4, calculating the rmsd parameters.
     if resu["calcu_rmsd"]==True:
         if have_parm_file:
             fp=open(resu["parm_file"])
@@ -298,3 +315,32 @@ if __name__=="__main__":
             G4_rise.Get_RMSD_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1,list_output,resu["skip"],\
                     begin=resu["begin"],end=resu["end"])
+
+# step 5, calculating the helical parameters.
+    if resu["calcu_helical"]==True:
+        if have_parm_file:
+            pass
+
+# step 6, calculating the dihedral parameters.
+    if resu["calcu_dihedral"]==True:
+        if have_parm_file:
+            fp=open(resu["parm_file"])
+            lines=fp.readlines()
+            for line in lines:
+                [group1,outputname]=line.split()
+                list_group_1.append(group1)
+                list_output.append(outputname)
+
+        else:
+            l1=Simple_atom.Get_residue(resu["coor_file"],True)
+            list_group_1.append(l1)
+            list_output.append(resu["output_file"])
+
+        if is_get_dt:
+            DNA_analysis.Get_Dihedral_fromTRJ(resu["traj_file"],resu["coor_file"],\
+                    list_group_1, list_output,resu["skip"],float(dt),resu["begin"],resu["end"])
+
+        else:
+            DNA_analysis.Get_Dihedral_fromTRJ(resu["traj_file"],resu["coor_file"],\
+                    list_group_1, list_output,resu["skip"],begin=resu["begin"],end=resu["end"])
+
