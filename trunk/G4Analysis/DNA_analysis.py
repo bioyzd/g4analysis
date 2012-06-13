@@ -289,7 +289,10 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
         fp.write("#Residue Index: ")
         fp.write("%d\n" %base_list[output_name.index(file_name)])
         fp.write("#skip:%d\n" %skip)
-        fp.write("#%11s%10s%10s%10s%10s%10s%10s%10s\n" %("time","alpha","beta","gamma","delta","epslon","zeta","chi"))
+
+        fp.write("%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s"\
+                %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi",\
+                "alpha","beta","gamma","delta","epslon","zeta","chi"))
         fp.close()
 
     u=MDAnalysis.Universe(coor_file,traj_file)
@@ -320,12 +323,19 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
             for i in range(len(base_list)):
                 fp = open(output_name[i], 'a')
                 resu=DNA_param.Get_Dihedral(Atom_list,base_list[i])
-                fp.write("%12d" %time)
+                fp.write("%12.4f" %time/1000)
                 for j in range(7):
                     if resu[j]=="-":
                         fp.write("%10s" %("-"*4)) 
                     else:
                         fp.write("%10.2f" %(resu[j]))
+
+                for j in range(7):
+                    if resu[j]=="-":
+                        fp.write("%8s" %("-"*4)) 
+                    else:
+                        fp.write("%8s" %(resu[j+7]))
+
                 fp.write("\n") 
 
 
