@@ -290,7 +290,7 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
         fp.write("%d\n" %base_list[output_name.index(file_name)])
         fp.write("#skip:%d\n" %skip)
 
-        fp.write("%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s"\
+        fp.write("%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s\n"\
                 %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi",\
                 "alpha","beta","gamma","delta","epslon","zeta","chi"))
         fp.close()
@@ -323,7 +323,7 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
             for i in range(len(base_list)):
                 fp = open(output_name[i], 'a')
                 resu=DNA_param.Get_Dihedral(Atom_list,base_list[i])
-                fp.write("%12.4f" %time/1000)
+                fp.write("%12.4f" %(time/1000))
                 for j in range(7):
                     if resu[j]=="-":
                         fp.write("%10s" %("-"*4)) 
@@ -341,7 +341,10 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
 
                 if ts.frame % 10 ==0 and i==0:
                     NOW_TIME=Time.time()
-                    usage.echo("  analysis frame %6d, time %8.1f ps, time used %8.2f s\r" %(ts.frame, time,NOW_TIME-START_TIME))
+                    if time < 1000:
+                        usage.echo("  analysis frame %6d, time %8.1f ps, time used %8.2f s\r" %(ts.frame, time,NOW_TIME-START_TIME))
+                    elif time > 1000 and ts.frame %100 ==0 :
+                        usage.echo("  analysis frame %6d, time %8.2f ns, time used %8.2f s\r" %(ts.frame, time/1000,NOW_TIME-START_TIME))
 
                 fp.close()
 
