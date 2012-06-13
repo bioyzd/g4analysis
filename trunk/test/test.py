@@ -166,7 +166,7 @@ def test_Get_pair_fromTOP():
     a=DNA_analysis.Get_para_fromTOP(pdb_file,[11,14],[12,13])
 
 def test_Get_Dihedral_fromTOP():
-    pdb_file="bdl084.pdb"
+    pdb_file="G4.gro"
     DNA_analysis.Get_Dihedral_fromTOP(pdb_file,[1,2,3,4,5,6,7,8,9,10,11,12],True)
 
 def test_Get_Dihedral_fromTRJ():
@@ -196,5 +196,5 @@ if __name__=="__main__":
 #    test_middle_frame()
 #    test_Get_pair_fromTOP#()
 #    test_DNA_analysis()
-#    test_Get_Dihedral_fromTOP()
-    test_Get_Dihedral_fromTRJ()
+    test_Get_Dihedral_fromTOP()
+#    test_Get_Dihedral_fromTRJ()
