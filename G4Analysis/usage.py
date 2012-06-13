@@ -30,16 +30,16 @@ def Print_line():
     print "-"*65
 
 def Type_input():
-    print "Option \t %10s   %6s     %10s " %("Type","Value","Description")
+    print "Option         %10s   %6s \t %10s " %("Type","Value","Description")
 
 def Show_help(value,Option="-h"):
-    print "%8s   %10s   %6s \t Print help info and quit " %(Option,"bool",value)
+    print "%12s   %10s   %6s \t Print help info and quit " %(Option,"bool",value)
 
 def Show_skip(value,Option="--skip"):
-    print "%8s   %10s   %6d \t Get frames when frame MOD skip = 0 " %(Option,"int",value)
+    print "%12s   %10s   %6d \t Get frames when frame MOD skip = 0 " %(Option,"int",value)
 
 def Show(Option,Type,value,description):
-    print "%8s   %10s   %6s \t %s" %(Option,Type,value,description)
+    print "%12s   %10s   %6s \t %s" %(Option,Type,value,description)
 
 def echo(s=''):
     """Simple string output that immediately prints to the console."""
