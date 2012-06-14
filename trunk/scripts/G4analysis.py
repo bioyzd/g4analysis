@@ -147,8 +147,8 @@ def Check_argv(argv):
     resu_hash["calcu_rmsd"]=calcu_rmsd
     resu_hash["calcu_rise"]=calcu_rise
     resu_hash["calcu_twist"]=calcu_twist
-    resu_hash["calcu_dihedral"]=calcu_twist
-    resu_hash["calcu_helical"]=calcu_twist
+    resu_hash["calcu_dihedral"]=calcu_dihedral
+    resu_hash["calcu_helical"]=calcu_helical
     resu_hash["begin"]=begin
     resu_hash["end"]=end
 
@@ -333,7 +333,7 @@ if __name__=="__main__":
 
         else:
             l1=Simple_atom.Get_residue(resu["coor_file"],True)
-            list_group_1.append(l1)
+            list_group_1=l1
             list_output.append(resu["output_file"])
 
         if is_get_dt:
@@ -343,4 +343,5 @@ if __name__=="__main__":
         else:
             DNA_analysis.Get_Dihedral_fromTRJ(resu["traj_file"],resu["coor_file"],\
                     list_group_1, list_output,resu["skip"],begin=resu["begin"],end=resu["end"])
+
 
