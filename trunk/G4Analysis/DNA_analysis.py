@@ -241,15 +241,15 @@ def Get_Dihedral_fromTOP( coor_file, base_list_1,PRINT=False ):
     Atom_list=Simple_atom.Get_atom_list(coor_file)
 
     if PRINT == True:
-        print "%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s"\
-                %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi",\
+        print "%8s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s"\
+                %("baseID","alpha","beta","gamma","delta","epslon","zeta","chi",\
                 "alpha","beta","gamma","delta","epslon","zeta","chi")
 
     for m in base_list_1:
         resu=DNA_param.Get_Dihedral(Atom_list,m)   
 
         if PRINT == True:
-            print "%12d" %m,
+            print "%8d" %m,
             for i in range(7):
                 if resu[i]=="-":
                     print "%9s" %("-"*4), 
@@ -291,7 +291,7 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
         fp.write("#skip:%d\n" %skip)
 
         fp.write("%12s%10s%10s%10s%10s%10s%10s%10s%8s%8s%8s%8s%8s%8s%8s\n"\
-                %("base_serial","alpha","beta","gamma","delta","epslon","zeta","chi",\
+                %("Time(ns)","alpha","beta","gamma","delta","epslon","zeta","chi",\
                 "alpha","beta","gamma","delta","epslon","zeta","chi"))
         fp.close()
 
