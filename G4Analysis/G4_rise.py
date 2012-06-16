@@ -181,11 +181,11 @@ def Get_rise_fromTRJ(traj_file, coor_file, base_list_1, base_list_2, output_name
                 gamma = math.acos(gamma)*180/3.1416
 
 
-                if ts.frame % 50 ==0 and i==0:
+                if ts.frame % 10 ==0 and i==0:
                     NOW_TIME=Time.time()
                     if time < 1000:
                         usage.echo("  analysis frame %6d, time %8.1f ps, time used %8.2f s\r" %(ts.frame, time,NOW_TIME-START_TIME))
-                    else:
+                    elif time > 1000 and ts.frame %200 == 0:
                         usage.echo("  analysis frame %6d, time %8.2f ns, time used %8.2f s\r" %(ts.frame, time/1000,NOW_TIME-START_TIME))
 
                 fp = open(output_name[i], 'a')
