@@ -27,6 +27,7 @@ from G4Analysis import G4_rise
 from G4Analysis import G4_twist
 from G4Analysis import usage
 from G4Analysis import DNA_analysis
+from G4Analysis.Coor import atomlib
 
 def Usage(coor_file="coor_file",traj_file="traj_file",output_file="output_file",\
         parm_file="para_analysis.in",skip=1,show_help="yes",\
@@ -323,6 +324,19 @@ if __name__=="__main__":
 
 # step 6, calculating the dihedral parameters.
     if resu["calcu_dihedral"]==True:
+        if resu["traj_file"]=="":
+            atom_list=Simple_atom.Get_Simple_atom_list(resu["coor_file"])
+            reside_list=Simple_atom.Get_Residue_list(atom_list)
+            chain=list()
+            for residue in reside_list:
+                if residue[0] in atomlib.RESIDUE_NAME_LIST:
+                    chain.append(residue[1])
+                else:
+                    pass
+
+            DNA_analysis.Get_Dihedral_fromTOP(resu["coor_file"],chain,True)
+            sys.exit(0)
+
         if have_parm_file:
             fp=open(resu["parm_file"])
             lines=fp.readlines()
