@@ -225,7 +225,8 @@ if __name__=="__main__":
                     [group1,group2,outputname]=line.split()
                 except ValueError,e:
                     print e
-                    print "I guess you forget the --rmsd for calculating the rmsd."
+                    print "Warning: The line [%s] was not standard, and this line will be ignored." %line
+                    continue
                 g1=group1.split(":")
                 g2=group2.split(":")
                 gg1=list()
