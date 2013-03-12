@@ -336,7 +336,7 @@ def Get_RMSD_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt=1,b
     if traj_file.endswith("mdcrd") or traj_file.endswith("dcd"):
         pass
     else:
-        dt=u.trajectory.dt
+        dt=u.dt
 
 
     for ts in u:
@@ -365,7 +365,7 @@ def Get_RMSD_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt=1,b
 
                 time=(ts.frame-1)*dt
 
-                if ts.frame % 10 ==0:
+                if ts.frame % 100 ==0:
                     NOW_TIME=Time.time()
                     usage.echo("  analysis frame %6d, time %8.1f ps, time used %8.2f s\r" %(ts.frame, time,NOW_TIME-START_TIME))
                 fp=open(output_name[i], 'a')
