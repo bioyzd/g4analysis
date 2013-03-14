@@ -287,6 +287,7 @@ def Get_Dihedral_fromTRJ(traj_file, coor_file, base_list, output_name,skip=1, dt
 
         fp = open(file_name, 'w')
         fp.write("#Residue Index: ")
+        print base_list[output_name.index(file_name)]
         fp.write("%d\n" %base_list[output_name.index(file_name)])
         fp.write("#skip:%d\n" %skip)
 
