@@ -343,7 +343,7 @@ if __name__=="__main__":
             lines=fp.readlines()
             for line in lines:
                 [group1,outputname]=line.split()
-                list_group_1.append(group1)
+                list_group_1.append(int(group1))
                 list_output.append(outputname)
 
         else:
