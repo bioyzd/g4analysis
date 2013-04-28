@@ -300,6 +300,8 @@ def Get_Dihedral(Atom_list, base_serial):
         zeta_c = "-"
 
     chi ,chi_c  =Calc_dihedral(Atom_list[index_O4],Atom_list[index_C1],Atom_list[index_N_base],Atom_list[index_C_base]) 
+#    print index_O4,index_C1,index_N_base,index_C_base
+#    print Atom_list[index_O4].atom_coor_x
     if chi < 0 or chi > 90:
         chi_c="anti"
     elif chi < 90 and chi > 0:
